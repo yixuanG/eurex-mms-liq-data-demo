@@ -1,0 +1,276 @@
+{
+  "dashboard_name": "EUREX Liquidity Analysis",
+  "theme": "Corporate",
+  "pages": [
+    {
+      "name": "Executive Summary",
+      "visuals": [
+        {
+          "type": "Card",
+          "title": "Total Segments",
+          "measure": "Total_Segments",
+          "position": {"x": 0, "y": 0, "width": 200, "height": 150},
+          "format": {
+            "fontSize": 36,
+            "fontColor": "#333333"
+          }
+        },
+        {
+          "type": "Card",
+          "title": "Avg Kyle's Lambda",
+          "measure": "Avg_Lambda_Abs",
+          "position": {"x": 220, "y": 0, "width": 200, "height": 150},
+          "format": {
+            "fontSize": 36,
+            "decimalPlaces": 4,
+            "conditionalFormatting": "Liquidity_Color"
+          }
+        },
+        {
+          "type": "Card",
+          "title": "Liquidity Status",
+          "measure": "Liquidity_Status",
+          "position": {"x": 440, "y": 0, "width": 200, "height": 150},
+          "format": {
+            "fontSize": 24
+          }
+        },
+        {
+          "type": "Bar Chart",
+          "title": "Liquidity Ranking by Segment",
+          "position": {"x": 0, "y": 170, "width": 640, "height": 400},
+          "xAxis": "segment_id",
+          "yAxis": "Avg_Lambda_Abs",
+          "sort": "lambda_abs",
+          "sortOrder": "Ascending",
+          "dataLabels": true,
+          "colors": {
+            "conditionalFormatting": true,
+            "rules": [
+              {"if": "< 0.0005", "color": "#28a745"},
+              {"if": "0.0005-0.001", "color": "#ffc107"},
+              {"if": "> 0.001", "color": "#dc3545"}
+            ]
+          }
+        },
+        {
+          "type": "Table",
+          "title": "Segment Metrics Overview",
+          "position": {"x": 0, "y": 590, "width": 640, "height": 300},
+          "columns": [
+            {"field": "segment_id", "width": 100},
+            {"field": "Avg_Lambda_Abs", "width": 120, "format": "#,##0.0000"},
+            {"field": "Liquidity_Status", "width": 100},
+            {"field": "Liquidity_Rank", "width": 80},
+            {"field": "Avg_Spread_BPS", "width": 120, "format": "#,##0.00"}
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Kyle's Lambda Deep Dive",
+      "visuals": [
+        {
+          "type": "Bar Chart",
+          "title": "Price Impact by Segment",
+          "orientation": "Horizontal",
+          "position": {"x": 0, "y": 0, "width": 600, "height": 400},
+          "xAxis": "lambda_abs",
+          "yAxis": "segment_id",
+          "dataLabels": true,
+          "tooltip": ["segment_id", "kyle_lambda", "r_squared", "liquidity_score"]
+        },
+        {
+          "type": "Scatter Plot",
+          "title": "Lambda vs R-Squared",
+          "position": {"x": 620, "y": 0, "width": 380, "height": 400},
+          "xAxis": "lambda_abs",
+          "yAxis": "r_squared",
+          "size": "n_observations",
+          "color": "segment_id",
+          "trendline": true
+        },
+        {
+          "type": "Gauge",
+          "title": "Overall Liquidity Score",
+          "position": {"x": 0, "y": 420, "width": 300, "height": 300},
+          "measure": "Liquidity_Score_Normalized",
+          "min": 0,
+          "max": 100,
+          "target": 75,
+          "ranges": [
+            {"from": 0, "to": 50, "color": "#dc3545"},
+            {"from": 50, "to": 75, "color": "#ffc107"},
+            {"from": 75, "to": 100, "color": "#28a745"}
+          ]
+        },
+        {
+          "type": "Matrix",
+          "title": "Lambda Statistics",
+          "position": {"x": 320, "y": 420, "width": 680, "height": 300},
+          "rows": ["segment_id"],
+          "values": [
+            "kyle_lambda",
+            "lambda_abs",
+            "std_error",
+            "liquidity_score"
+          ],
+          "conditionalFormatting": {
+            "lambda_abs": "dataBar"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Spread Decomposition",
+      "visuals": [
+        {
+          "type": "Stacked Bar Chart",
+          "title": "Spread Components by Segment",
+          "position": {"x": 0, "y": 0, "width": 600, "height": 400},
+          "xAxis": "segment_id",
+          "yAxis": ["price_impact_bps", "realized_spread_bps"],
+          "legend": {
+            "position": "Right",
+            "labels": ["Adverse Selection", "Transient"]
+          },
+          "colors": ["#e74c3c", "#3498db"]
+        },
+        {
+          "type": "Pie Chart",
+          "title": "Average Spread Composition",
+          "position": {"x": 620, "y": 0, "width": 380, "height": 400},
+          "values": ["Total_Price_Impact", "Total_Realized_Spread"],
+          "labels": ["Adverse Selection", "Transient"],
+          "showPercentages": true,
+          "colors": ["#e74c3c", "#3498db"]
+        },
+        {
+          "type": "Column Chart",
+          "title": "Effective Spread (BPS)",
+          "position": {"x": 0, "y": 420, "width": 500, "height": 300},
+          "xAxis": "segment_id",
+          "yAxis": "effective_spread_bps",
+          "dataLabels": true
+        },
+        {
+          "type": "KPI Card",
+          "title": "Adverse Selection %",
+          "position": {"x": 520, "y": 420, "width": 240, "height": 150},
+          "measure": "Adverse_Selection_%",
+          "trend": "Lambda_Trend_Arrow",
+          "goal": 50,
+          "format": "#,##0.0"
+        },
+        {
+          "type": "KPI Card",
+          "title": "Transient %",
+          "position": {"x": 780, "y": 420, "width": 240, "height": 150},
+          "measure": "Transient_%",
+          "trend": "Lambda_Trend_Arrow",
+          "goal": 50,
+          "format": "#,##0.0"
+        },
+        {
+          "type": "Table",
+          "title": "Spread Decomposition Details",
+          "position": {"x": 520, "y": 590, "width": 500, "height": 130},
+          "columns": [
+            "segment_id",
+            "effective_spread_bps",
+            "price_impact_bps",
+            "realized_spread_bps",
+            "adverse_selection_pct"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Amihud Illiquidity",
+      "visuals": [
+        {
+          "type": "Matrix Heat Map",
+          "title": "Illiquidity by Segment",
+          "position": {"x": 0, "y": 0, "width": 600, "height": 400},
+          "rows": ["segment_id"],
+          "columns": ["security_id"],
+          "values": "avg_amihud",
+          "colorScale": {
+            "min": "#28a745",
+            "mid": "#ffc107",
+            "max": "#dc3545"
+          }
+        },
+        {
+          "type": "Histogram",
+          "title": "Illiquidity Distribution",
+          "position": {"x": 620, "y": 0, "width": 380, "height": 400},
+          "xAxis": "avg_amihud",
+          "bins": 20,
+          "showDensityCurve": true
+        },
+        {
+          "type": "Box Plot",
+          "title": "Amihud Statistics by Segment",
+          "position": {"x": 0, "y": 420, "width": 500, "height": 300},
+          "category": "segment_id",
+          "values": "avg_amihud",
+          "showOutliers": true
+        },
+        {
+          "type": "Card",
+          "title": "Avg Amihud",
+          "position": {"x": 520, "y": 420, "width": 240, "height": 150},
+          "measure": "Avg_Amihud",
+          "format": "#,##0.00"
+        },
+        {
+          "type": "Card",
+          "title": "Median Amihud",
+          "position": {"x": 780, "y": 420, "width": 240, "height": 150},
+          "measure": "Median_Amihud",
+          "format": "#,##0.00"
+        },
+        {
+          "type": "Table",
+          "title": "Detailed Metrics",
+          "position": {"x": 520, "y": 590, "width": 500, "height": 130},
+          "columns": [
+            "segment_id",
+            "security_id",
+            "avg_amihud",
+            "median_amihud",
+            "std_amihud"
+          ]
+        }
+      ]
+    }
+  ],
+  "slicers": [
+    {
+      "field": "segment_id",
+      "type": "dropdown",
+      "multiSelect": true,
+      "position": {"x": 10, "y": 10}
+    },
+    {
+      "field": "Liquidity_Alert",
+      "type": "list",
+      "position": {"x": 10, "y": 80}
+    }
+  ],
+  "theme_colors": {
+    "primary": "#0078d4",
+    "success": "#28a745",
+    "warning": "#ffc107",
+    "danger": "#dc3545",
+    "background": "#ffffff",
+    "text": "#333333"
+  },
+  "notes": [
+    "This JSON serves as a reference for building the dashboard in Power BI Desktop",
+    "Actual implementation requires manual visual creation in Power BI",
+    "Use this as a blueprint for layout and configuration",
+    "Adjust positions based on your screen resolution"
+  ]
+}

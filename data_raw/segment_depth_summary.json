@@ -1,0 +1,96 @@
+{
+  "analysis_date": "2025-11-16T10:55:34.701378",
+  "segments_analyzed": 10,
+  "results": [
+    {
+      "Segment": 48,
+      "Max_Level": 5,
+      "Suggested_L": 6,
+      "L1_Entries_%": 35.0,
+      "DI_Size_MB": 1.22,
+      "Lines_Scanned": 5000,
+      "Total_Entries": 13415
+    },
+    {
+      "Segment": 50,
+      "Max_Level": 5,
+      "Suggested_L": 6,
+      "L1_Entries_%": 25.2,
+      "DI_Size_MB": 1103.96,
+      "Lines_Scanned": 5000,
+      "Total_Entries": 153570
+    },
+    {
+      "Segment": 589,
+      "Max_Level": 5,
+      "Suggested_L": 6,
+      "L1_Entries_%": 42.6,
+      "DI_Size_MB": 221.08,
+      "Lines_Scanned": 5000,
+      "Total_Entries": 8809
+    },
+    {
+      "Segment": 688,
+      "Max_Level": 2,
+      "Suggested_L": 3,
+      "L1_Entries_%": 37.4,
+      "DI_Size_MB": 366.51,
+      "Lines_Scanned": 5000,
+      "Total_Entries": 9453
+    },
+    {
+      "Segment": 702,
+      "Max_Level": 5,
+      "Suggested_L": 6,
+      "L1_Entries_%": 73.3,
+      "DI_Size_MB": 0.46,
+      "Lines_Scanned": 524,
+      "Total_Entries": 7281
+    },
+    {
+      "Segment": 821,
+      "Max_Level": 5,
+      "Suggested_L": 6,
+      "L1_Entries_%": 63.0,
+      "DI_Size_MB": 54.77,
+      "Lines_Scanned": 5000,
+      "Total_Entries": 19668
+    },
+    {
+      "Segment": 1176,
+      "Max_Level": 5,
+      "Suggested_L": 6,
+      "L1_Entries_%": 19.2,
+      "DI_Size_MB": 9610.09,
+      "Lines_Scanned": 5000,
+      "Total_Entries": 149313
+    },
+    {
+      "Segment": 1209,
+      "Max_Level": 4,
+      "Suggested_L": 5,
+      "L1_Entries_%": 34.3,
+      "DI_Size_MB": 0.0,
+      "Lines_Scanned": 4,
+      "Total_Entries": 35
+    },
+    {
+      "Segment": 1373,
+      "Max_Level": 5,
+      "Suggested_L": 6,
+      "L1_Entries_%": 10.7,
+      "DI_Size_MB": 921.57,
+      "Lines_Scanned": 5000,
+      "Total_Entries": 39015
+    },
+    {
+      "Segment": 1374,
+      "Max_Level": 5,
+      "Suggested_L": 6,
+      "L1_Entries_%": 11.8,
+      "DI_Size_MB": 0.38,
+      "Lines_Scanned": 682,
+      "Total_Entries": 6873
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+ORDER FLOW DATA PREPARATION - SUMMARY
+======================================================================
+Timestamp: 2025-11-17 18:30:52
+
+Segments: [np.int64(48), np.int64(589), np.int64(688), np.int64(702), np.int64(821)]
+Time Windows: ['1m', '1s', '3s', '5m']
+Total Rows: 184,020
+Date Range: 2020-12-01 00:15:00 to 2020-12-01 21:00:00
+
+COLUMNS:
+  - time_bin
+  - price_level
+  - bid_volume
+  - ask_volume
+  - net_volume
+  - trade_count
+  - avg_bid_price
+  - avg_ask_price
+  - time_window
+  - segment_id
+  - trading_time
+
+FILES GENERATED:
+  ⭐ order_flow_data.csv (MAIN FILE - use this in Power BI)
+  - order_flow_1m.csv
+  - order_flow_1s.csv
+  - order_flow_3s.csv
+  - order_flow_5m.csv
+
+KEY FEATURES:
+  - Single file with all segments (use segment_id to filter)
+  - Single file with all time windows (use time_window to filter)
+  - trading_time column: formatted datetime from time_bin
+  - Power BI slicers handle all filtering

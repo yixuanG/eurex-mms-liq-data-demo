@@ -1,0 +1,9 @@
+pandas
+numpy
+duckdb
+pyarrow
+openpyxl
+scipy
+tqdm
+ pandasdmx
+ requests

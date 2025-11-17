@@ -1,0 +1,272 @@
+// ============================================
+// POWER BI DAX MEASURES
+// Copy-paste these into Power BI Desktop
+// ============================================
+
+// ----------------------------------------
+// BASIC METRICS
+// ----------------------------------------
+
+Total_Segments = DISTINCTCOUNT(segment_summary[segment_id])
+
+Avg_Kyle_Lambda = AVERAGE(kyle_lambda_segment[kyle_lambda])
+
+Avg_Lambda_Abs = AVERAGE(kyle_lambda_segment[lambda_abs])
+
+Avg_Liquidity_Score = AVERAGE(kyle_lambda_segment[liquidity_score])
+
+Avg_Spread_BPS = AVERAGE(spread_decomposition[effective_spread_bps])
+
+// ----------------------------------------
+// LIQUIDITY INDICATORS
+// ----------------------------------------
+
+Liquidity_Status = 
+VAR CurrentLambda = [Avg_Lambda_Abs]
+RETURN
+SWITCH(
+    TRUE(),
+    CurrentLambda > 0.001, "🔴 Poor",
+    CurrentLambda > 0.0005, "🟡 Fair",
+    "🟢 Good"
+)
+
+Liquidity_Alert = 
+IF(
+    [Avg_Lambda_Abs] > 0.001, 
+    "High Risk",
+    IF(
+        [Avg_Lambda_Abs] > 0.0005,
+        "Medium Risk",
+        "Low Risk"
+    )
+)
+
+// Traffic light color for conditional formatting
+Liquidity_Color = 
+VAR CurrentLambda = [Avg_Lambda_Abs]
+RETURN
+SWITCH(
+    TRUE(),
+    CurrentLambda > 0.001, "#dc3545",  // Red
+    CurrentLambda > 0.0005, "#ffc107", // Yellow
+    "#28a745"                           // Green
+)
+
+// ----------------------------------------
+// SPREAD DECOMPOSITION
+// ----------------------------------------
+
+Total_Effective_Spread = SUM(spread_decomposition[effective_spread_bps])
+
+Total_Price_Impact = SUM(spread_decomposition[price_impact_bps])
+
+Total_Realized_Spread = SUM(spread_decomposition[realized_spread_bps])
+
+Adverse_Selection_% = 
+DIVIDE(
+    [Total_Price_Impact],
+    [Total_Effective_Spread],
+    0
+) * 100
+
+Transient_% = 
+DIVIDE(
+    [Total_Realized_Spread],
+    [Total_Effective_Spread],
+    0
+) * 100
+
+Spread_Quality = 
+IF(
+    [Adverse_Selection_%] > 60,
+    "High Info Asymmetry",
+    IF(
+        [Adverse_Selection_%] > 40,
+        "Balanced",
+        "Inventory Dominated"
+    )
+)
+
+// ----------------------------------------
+// AMIHUD METRICS
+// ----------------------------------------
+
+Avg_Amihud = AVERAGE(amihud_illiquidity[avg_amihud])
+
+Median_Amihud = MEDIAN(amihud_illiquidity[median_amihud])
+
+Amihud_Volatility = AVERAGE(amihud_illiquidity[std_amihud])
+
+// ----------------------------------------
+// RANKINGS
+// ----------------------------------------
+
+Liquidity_Rank = 
+RANKX(
+    ALL(kyle_lambda_segment[segment_id]),
+    [Avg_Lambda_Abs],
+    ,
+    ASC,
+    DENSE
+)
+
+Spread_Rank = 
+RANKX(
+    ALL(spread_decomposition[segment_id]),
+    [Avg_Spread_BPS],
+    ,
+    DESC,
+    DENSE
+)
+
+// ----------------------------------------
+// COMPARISONS
+// ----------------------------------------
+
+Lambda_vs_Avg = 
+VAR OverallAvg = CALCULATE([Avg_Lambda_Abs], ALL(kyle_lambda_segment))
+VAR CurrentValue = [Avg_Lambda_Abs]
+RETURN
+DIVIDE(CurrentValue - OverallAvg, OverallAvg, 0) * 100
+
+Spread_vs_Avg = 
+VAR OverallAvg = CALCULATE([Avg_Spread_BPS], ALL(spread_decomposition))
+VAR CurrentValue = [Avg_Spread_BPS]
+RETURN
+DIVIDE(CurrentValue - OverallAvg, OverallAvg, 0) * 100
+
+// ----------------------------------------
+// QUALITY SCORES (0-100)
+// ----------------------------------------
+
+Liquidity_Score_Normalized = 
+VAR MaxLambda = MAXX(ALL(kyle_lambda_segment), kyle_lambda_segment[lambda_abs])
+VAR MinLambda = MINX(ALL(kyle_lambda_segment), kyle_lambda_segment[lambda_abs])
+VAR CurrentLambda = [Avg_Lambda_Abs]
+RETURN
+IF(
+    MaxLambda = MinLambda,
+    50,
+    100 - DIVIDE(CurrentLambda - MinLambda, MaxLambda - MinLambda, 0) * 100
+)
+
+Overall_Quality = 
+(
+    [Liquidity_Score_Normalized] * 0.5 +
+    (100 - [Adverse_Selection_%]) * 0.3 +
+    (100 - MIN([Avg_Spread_BPS] / 10, 100)) * 0.2
+)
+
+// ----------------------------------------
+// CONDITIONAL FORMATTING HELPERS
+// ----------------------------------------
+
+Lambda_Trend_Arrow = 
+"→"  // Replace with actual trend calculation if historical data available
+
+Risk_Level_Number = 
+SWITCH(
+    [Liquidity_Alert],
+    "High Risk", 3,
+    "Medium Risk", 2,
+    "Low Risk", 1,
+    0
+)
+
+// ----------------------------------------
+// TOOLTIPS
+// ----------------------------------------
+
+Tooltip_Text = 
+"Lambda: " & FORMAT([Avg_Lambda_Abs], "#,##0.0000") & 
+UNICHAR(10) & 
+"Liquidity Score: " & FORMAT([Avg_Liquidity_Score], "#,##0.00") &
+UNICHAR(10) &
+"Status: " & [Liquidity_Status]
+
+// ----------------------------------------
+// FILTERS
+// ----------------------------------------
+
+Is_High_Lambda = [Avg_Lambda_Abs] > 0.001
+
+Is_Liquid = [Avg_Lambda_Abs] <= 0.0005
+
+Has_Imbalance = [Adverse_Selection_%] <> 50
+
+// ----------------------------------------
+// TIME INTELLIGENCE (if date column exists)
+// ----------------------------------------
+
+// Previous_Lambda = CALCULATE([Avg_Lambda_Abs], PREVIOUSDAY('DateTable'[Date]))
+
+// Lambda_Change = [Avg_Lambda_Abs] - [Previous_Lambda]
+
+// Lambda_Change_% = DIVIDE([Lambda_Change], [Previous_Lambda], 0) * 100
+
+// ----------------------------------------
+// ADVANCED ANALYTICS
+// ----------------------------------------
+
+Correlation_Lambda_Spread = 
+// Requires Python/R visual or custom measure
+// Placeholder: Shows relationship strength
+"Use Python visual for correlation analysis"
+
+Liquidity_Percentile = 
+PERCENTILEX.INC(
+    ALL(kyle_lambda_segment),
+    kyle_lambda_segment[lambda_abs],
+    [Avg_Lambda_Abs]
+) * 100
+
+// ----------------------------------------
+// SUMMARY CARDS
+// ----------------------------------------
+
+Best_Segment = 
+VAR BestSegmentID = 
+    TOPN(
+        1,
+        VALUES(kyle_lambda_segment[segment_id]),
+        [Avg_Lambda_Abs],
+        ASC
+    )
+RETURN
+CONCATENATEX(BestSegmentID, kyle_lambda_segment[segment_id], ", ")
+
+Worst_Segment = 
+VAR WorstSegmentID = 
+    TOPN(
+        1,
+        VALUES(kyle_lambda_segment[segment_id]),
+        [Avg_Lambda_Abs],
+        DESC
+    )
+RETURN
+CONCATENATEX(WorstSegmentID, kyle_lambda_segment[segment_id], ", ")
+
+// ----------------------------------------
+// DATA QUALITY CHECKS
+// ----------------------------------------
+
+Records_With_Data = COUNTROWS(kyle_lambda_segment)
+
+Segments_With_Spread_Data = DISTINCTCOUNT(spread_decomposition[segment_id])
+
+Data_Coverage_% = 
+DIVIDE(
+    [Segments_With_Spread_Data],
+    [Total_Segments],
+    0
+) * 100
+
+// ============================================
+// USAGE INSTRUCTIONS
+// ============================================
+// 1. Copy the measure you want
+// 2. In Power BI: Modeling → New Measure
+// 3. Paste and press Enter
+// 4. Repeat for all measures needed
+// ============================================

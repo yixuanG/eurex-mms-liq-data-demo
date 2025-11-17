@@ -1,0 +1,20 @@
+__pycache__/
+.ipynb_checkpoints/
+.DS_Store
+.env
+.venv/
+parquet/
+
+# Data files (too large for GitHub)
+data_segments/
+data_raw/*.csv
+warehouse.zip
+export_powerbi/
+
+# Warehouse files
+warehouse/*.duckdb
+!warehouse/eurex.duckdb
+
+# Keep only small reference files
+!data_raw/segment_depth_summary.json
+!data_raw/*.xlsx
