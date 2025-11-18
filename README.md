@@ -1,12 +1,9 @@
 # Eurex Market Microstructure Liquidity Analysis
 
-**Demonstrating quantitative analysis skills through high-frequency market data engineering and liquidity visualization.**
-
-This repository showcases end-to-end expertise in market microstructure analysis: from raw tick data processing to analytical warehouse design and interactive visualization. Built to demonstrate the basic proficiency for the role of derivatives micro liquidity analysis for market design reference.
+**Built to demonstrate:** Market microstructure analysis capabilities for derivatives liquidity analytics - from raw HF data processing to actionable business value via interactive dashboards.      
+**Badges:**  Market Microstructure | NumPy | Pandas | Matplotlib | Plotly | Seaborn | DuckDB | Power BI
 
 To save time, please view the final interactive dashboard in `/dashboards/GUO_Yixuan_eurex-mms-liq-viz-demo.pbix`. In case of unavailable Python visuals on the dashboard, please view the static export `/dashboards/GUO_Yixuan_eurex-mms-liq-viz-demo.pdf`.
-
-> This modest result serves merely as a showcase of my initial understanding and competency in this role at Eurex. While recognizing the current results fall short of professional standards, I understand deepening experience and support from the Eurex colleagues will be crucial for me to developing code and visuals with tangible business value.
 
 ## Job-related knowledge and skills used for this demonstration
 
