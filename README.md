@@ -11,7 +11,7 @@ To save time, please view the final interactive dashboard in `/dashboards/GUO_Yi
 ## Job-related knowledge and skills used for this demonstration
 
 * **Financial Markets Microstructure**
-  * An open-source course by Egor Starkov of University of Copenhagen)
+  * An open-source course by Egor Starkov of University of Copenhagen
 
     * Files (syllabus, slides, homeworks, exams): [[Spring 2025]](https://starkov.site/teaching/FMM_2025.7z). Older versions: [[Spring 2020]](https://starkov.site/teaching/FMM_2020.zip).
     * LaTeX sources: [[github]](https://github.com/electronicgore/finmarkets)
