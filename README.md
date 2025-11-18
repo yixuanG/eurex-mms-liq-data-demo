@@ -388,22 +388,17 @@ CREATE VIEW liquidity_1m AS ...
 
 - Track liquidity quality metrics across segments to identify products requiring attention
 - Compare liquidity profiles across similar instruments to detect outliers
-- Monitor temporal patterns (intraday, day-of-week) to inform market hours or auction design
 
-**Market Structure Evaluation**:
+**To-do**: 
+When transaction price data is supplemented
+- Calculate realized spread to better gauge adverse selection cost 
+- Tell if quotes actually get filled
+- Compare actual liquidity privision vs. phantom liquidity
 
+When market maker performance data is supplemented
+- Provide quantitative evidence for rule changes (e.g., rebate, tick size adjustments)
 - Assess impact of tick size on spread tightness and depth display
 - Evaluate pro-rata vs FIFO matching effectiveness across product types
-- Identify whether market maker obligations are sufficient for various liquidity regimes
-
-**Evidence-Based Policy Support**:
-
-- Provide quantitative evidence for rule changes (e.g., circuit breaker thresholds, tick size adjustments)
 - Monitor market quality before/after structural changes to measure impact
 - Support discussions with market participants using objective liquidity data
-
-**Surveillance & Market Quality**:
-
-- Detect anomalous trading patterns that may indicate manipulation or operational issues
-- Monitor message-to-trade ratios to assess if excessive messaging fees are needed
 - Identify periods of market stress requiring heightened surveillance
