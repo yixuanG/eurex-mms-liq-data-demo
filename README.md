@@ -18,12 +18,12 @@ To save time, please view the final interactive dashboard in `/dashboards/GUO_Yi
     * Lecture recordings (unedited): [[2020]](https://www.youtube.com/playlist?list=PL4pUs4P_j1Wa2_P1lw44kFWWjKDTGUY7S) (youtube playlist)
 
     **Concepts learned and applied:**
-
     * Three Dimensions of Liquidity (tightness, depth, resiliency)
-    * Market Maker Economics (spread decomposition) *(due to lack of transaction price, realized spread wasn't able to be calculated)*
+    * Market Maker Economics (spread decomposition)
     * Order Book Dynamics (reconstruction algorithm)
     * Price Impact Models (Kyle's lambda)
     * Market Quality Metrics (academic standard measures)
+    *(due to lack of transaction price, a few key measures weren't able to be applied)*
 
 - **Data Engineering**: High-frequency data pipeline, batch processing at scale, schema inference
 - **Analytical Warehouse**: DuckDB design with time-series optimization and multi-granularity aggregation
