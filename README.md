@@ -3,7 +3,7 @@
 **Built to demonstrate:** Market microstructure analysis capabilities for derivatives liquidity analytics - from raw HF data processing to actionable business value via interactive dashboards.      
 **Badges:**  Market Microstructure | NumPy | Pandas | Matplotlib | Plotly | Seaborn | DuckDB | Power BI
 
-To save time, please view the final interactive [dashboard](dashboards/GUO_Yixuan_eurex-mms-liq-viz-demo.pbix). In case of unavailable Python visuals on the dashboard, please view the static export [pdf](dashboards/GUO_Yixuan_eurex-mms-liq-viz-demo.pdf).
+To save time, please view the final interactive [dashboard](dashboards/GUO_Yixuan_eurex-mms-liq-viz-demo.pbix) in your local PowerBI app. In case of unavailable Python visuals on the dashboard, please view the static export [pdf](dashboards/GUO_Yixuan_eurex-mms-liq-viz-demo.pdf).
 
 ## Job-related knowledge and skills used for this demonstration
 
