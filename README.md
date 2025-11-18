@@ -22,8 +22,8 @@ To save time, please view the final interactive dashboard in `/dashboards/GUO_Yi
     * Market Maker Economics (spread decomposition)
     * Order Book Dynamics (reconstruction algorithm)
     * Price Impact Models (Kyle's lambda)
-    * Market Quality Metrics (academic standard measures)       
-    *(due to lack of transaction price, a few key measures weren't able to be applied)*
+    * Market Quality Metrics (academic standard measures)
+*(due to lack of transaction price, a few key measures weren't able to be applied)*
 
 - **Data Engineering**: High-frequency data pipeline, batch processing at scale, schema inference
 - **Analytical Warehouse**: DuckDB design with time-series optimization and multi-granularity aggregation
